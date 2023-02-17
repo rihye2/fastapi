@@ -38,7 +38,7 @@ python 프레임워크를 이용하여 developing, scheduling, monitoring을 할
 
 ###### Airflow 구성요소
 
-![](/Users/hyeri/cloudai/fastapi/imgs/airflow.png)
+![](/imgs/airflow.png)
 
 - **scheduler:** DAG와 작업들을 모니터링하고 실행순서와 상태를 관리
   (airflow로 할당된 work들을 스케쥴링, executor에게 task를 제공해줌)
