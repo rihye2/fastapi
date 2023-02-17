@@ -1,5 +1,6 @@
 #### [Airflow 기초] 용어정리
 
+
 workflow를 관리하는 툴로 (관리한다? 워크플로우작성, 스케줄링, 모니터링하는 작업들)
 
 python 프레임워크를 이용하여 developing, scheduling, monitoring을 할 수 있는 플랫폼이다.
@@ -8,7 +9,9 @@ python 프레임워크를 이용하여 developing, scheduling, monitoring을 할
 
 
 
+
 *그렇다면 왜? airflow를 사용할까*
+
 
 기존에는 다음과 같은 문제점이 존재
 
@@ -22,7 +25,9 @@ python 프레임워크를 이용하여 developing, scheduling, monitoring을 할
 
 
 
+
 **Airflow 장점** (Airflow가 이러한 단점들을 해결해 주었다)
+
 
 - 의존성을 표현할 수 있다: 의존성이 생기게 되면 컨트롤하기 어렵다(어디서 잘못되었는지 확인이 어렵고, 복구에도 문제가 생김!)
 
@@ -34,11 +39,13 @@ python 프레임워크를 이용하여 developing, scheduling, monitoring을 할
 
 *workflow는 무엇인가?*
 
+
 가장 작은 단위의 Operator들이 모여 Task가 되며, Task가 모여 DAG,DAG가 모여 workflow가 되는것이다.
 
 ###### Airflow 구성요소
 
 ![](/imgs/airflow.png)
+
 
 - **scheduler:** DAG와 작업들을 모니터링하고 실행순서와 상태를 관리
   (airflow로 할당된 work들을 스케쥴링, executor에게 task를 제공해줌)
@@ -58,6 +65,7 @@ python 프레임워크를 이용하여 developing, scheduling, monitoring을 할
 
 ###### DAG란 ?
 
+
 - Directed Acyclic Graph(비순환 구조 그래프, 싸이클이 없다. 즉, 단방향)
 
 - airflow에서는 하나의 작업 flow를 DAG라고 한다
@@ -72,7 +80,9 @@ python 프레임워크를 이용하여 developing, scheduling, monitoring을 할
 
 
 
+
 ###### Task란?
+
 
 - 가장 작은 작업 단위
 
@@ -84,7 +94,9 @@ python 프레임워크를 이용하여 developing, scheduling, monitoring을 할
 
 
 
+
 ###### Operator란?
+
 
 airflow는 Operator를 사용하여 python, bash, aws, slack등 다양한 동작 실행시킬 수 있음
 
@@ -108,6 +120,7 @@ exp_task = BashOperator(
 )
 ```
 
+
 airflow에는 여러 Operator가 존재한다
 
 - Action Operator: action 실행
@@ -118,7 +131,9 @@ airflow에는 여러 Operator가 존재한다
 
 
 
+
 ###### Sensor 란?
+
 
 Operator처럼 Task로 사용할 수 있다. 특정 조건을 만족하는 경우 이후 Task로 넘어가게 하는 역할
 
@@ -130,7 +145,9 @@ Operator처럼 Task로 사용할 수 있다. 특정 조건을 만족하는 경�
 
 따라서, Airflow는 어떻게 동작하는가?
 
+
 ###### Airflow 동작방식
+
 
 - Task로 구성된 DAG를 작성하여 workflow를 생성
 
@@ -147,6 +164,7 @@ Operator처럼 Task로 사용할 수 있다. 특정 조건을 만족하는 경�
 
 
 ###### DagRun이란?
+
 
 DAG에서 정의한 작업을 동작하는 instance다
 
