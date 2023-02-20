@@ -4,8 +4,6 @@
 
 *튜토리얼이 존재한다. 이거 하나만으로는 이해가 매우 부족할 듯 하여 해당 예제를 기점으로 여러 예제를 테스트 해보는게 좋을 것 같다)*
 
-
-
 ```python
 from datetime import timedelta
 from textwrap import dedent
@@ -42,7 +40,7 @@ with DAG('tutorial', #객체에 수많은 dag를 구별할 고유한 식별자 d
         task_id='print_date',
         bash_command='date'
     )
-    
+
     task2 = BashOperator(
         task_id='sleep',
         depends_on_past = False,
@@ -58,33 +56,30 @@ with DAG('tutorial', #객체에 수많은 dag를 구별할 고유한 식별자 d
     {% endfor %}
         """
     )
-    
+
     task3 = BashOperator(
         task_id = 'templated',
         depends_on_past = False,
         bash_command=templated_command,
         params={'my_param': 'Parameter I passed in'},
     ) 
-    
+
     #의존관계 정의
     #task method : set_downstream & set_upstream
     #연산자: >> & <<
     task1.set_downstream(task2)
-    
+
     task2.set_upstream(task1)
-    
+
     task1 >> task2
     task2 << task1
-    
+
     task1 >> task2 >> task3
-    
+
     task1.set_downstream([task2, task3])
     task1 >> [task2, task3]
     [task2, task3] << task1
-    
 ```
-
-
 
 ##### DAG 구조 확인
 
@@ -104,8 +99,6 @@ digraph tutorial {
 }
 ```
 
-
-
 ##### Dag의 Task 목록 확인
 
 `airflow tasks list <DAG_ID> -t` (트리 형태로 확인하고 싶을 때)
@@ -119,13 +112,9 @@ digraph tutorial {
     <Task(BashOperator): templated>
 ```
 
-
-
 airflow는 Jinja Template, 사전 정의된 Parameters, Macro를 지원한다.
 
 Jinja Templating을 사용하면, Template이 rendering될 때 변수 및 표현들을 실제 값으로 반환한다.
-
-
 
 ##### Jinja template 란?
 
@@ -140,5 +129,25 @@ Jinja Templating을 사용하면, Template이 rendering될 때 변수 및 표현
 - 반복문을 사용하고 싶을 때는 {% for %} ~ {% endfor %} 사이에 html코드와 변수를 위치시키면 for문 처럼 사용할 수 있다. (들여쓰기는 신경쓰지 않아도 된다고 함)
 
 - 조건문: {% if %}{% elif %}{% else %} ~{% endfor %} endfor로 조건문 종료
+
+
+
+
+
+
+
+
+
+ The four F's of active reviewing (오늘도 부끄러운 4줄)
+
+facts:  airflow 의 아주 기초적인 개념정도를 봤으니, DagGenerator가 어떻게 작동하는지 코드를 뜯어봐야한다.
+
+feelings: 산넘어 산.. 그래도 개념을 봤다고 동공지진이 오진 않았음. 가장 빠르게 이해하기 위해서는 예제를 따라해보는게 최고인 것 같다. 
+
+findings: Operator 한번 써봤는데.. 아직 감이 안 온다. 굉장히 다양한 Operator가 존재하는 것 같다. 
+
+우리팀 코드를 보니 dummy, kubernetes 등을 사용한게 보인다. 
+
+futures: basic 예제를 따라한 정도라 좀 더 여러 예제들을 테스트해보는게 좋을 것 같다
 
 
