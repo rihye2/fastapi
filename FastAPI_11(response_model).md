@@ -2,7 +2,7 @@
 
  operation들에 대해(get, post, put, delete 등) response_model을 지정할 수 있다.
 
-- decoration의 input으로 들어감
+- decoration에서 선언!
 
 - output data를 response_model에서 지정한 모델로 변환
 
@@ -21,11 +21,10 @@ async def create_item(item: Item):
     return item
 ```
 
-
-
-
-
 create_user함수에서 UserIn을 받지만 operation에서 UserOut의 형태로 output data를 반환
+
+- output 형태를 선언한 타입으로 변환할 수 있음
+  (즉, 출력 데이터 모델을 지정해줄 수 있다)
 
 ```python
 from pydantic import BaseModel, EmailStr
@@ -48,8 +47,6 @@ class UserOut(BaseModel):
 async def create_user(user: UserIn):
     return user
 ```
-
-
 
 #### response_model_exclude_unset=True
 
@@ -74,17 +71,11 @@ items = {
 @app.post("/items/{item_id}", response_model=Item, response_model_exclude_unset=True)
 async def create_item(item_id: str):
     return items[item_id]
-
 ```
-
-
-
-
 
 순서대로 item_id = 'aa', 'bb', 'cc' execute 할 경우
 
 ```python
-
 #item_id = "aa""
 
 {
@@ -107,17 +98,15 @@ async def create_item(item_id: str):
   "tax": 10.5,
   "tags": []
 }
-
-
-
-
 ```
-
-
 
 #### response_model_include, response_model_exclude
 
 response 모델의 필드를 include or exclude 할지 결정할 수 있음
+
+- response_model_include의경우 지정된 값이 존재할 시 return, 없으면 null
+
+- response_model_exclude의 경우 특정 필드 제외하고 나머지 값이 있다면 전부 return
 
 ```python
 @app.get("/items/{item_id}/name", response_model=Item, response_model_include={"name", "description"},)
@@ -128,8 +117,6 @@ async def read_item_name(item_id: str):
 async def read_item_public_data(item_id: str):
     return items[item_id]
 ```
-
-
 
 response_model_include={"name", "description"}
 
@@ -151,8 +138,6 @@ response_model_include={"name", "description"}
   "description": null
 }
 ```
-
-
 
 response_model_exclude={"tax"}
 
@@ -179,9 +164,3 @@ response_model_exclude={"tax"}
   "tags": []
 }
 ```
-
-
-
-
-
-
